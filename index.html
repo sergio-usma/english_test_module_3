@@ -346,6 +346,7 @@ body {
 }
 .opt-text {
   flex: 1;
+  color: #ffffff !important;   /* 🔥 FORCED WHITE for readability */
 }
 .opt.correct {
   background: rgba(34,197,94,0.2);
@@ -510,7 +511,6 @@ function generateFullQuestions() {
   
   let all = [...baseQuestions];
   let id = baseQuestions.length + 1;
-  // patrones para llenar hasta 250
   const adverbsPool = ["loudly","quietly","slowly","happily","sadly","creatively","deeply","seriously","patiently","honestly","efficiently","politely","frequently","recently","strangely","horribly","carefully","clearly"];
   const irregulars = [["well","better","best"],["badly","worse","worst"],["far","farther","farthest"],["little","less","least"],["much","more","most"]];
   
@@ -525,7 +525,6 @@ function generateFullQuestions() {
       ans: template.ans,
       insight: template.insight
     };
-    // variar ligeramente para evitar duplicados exactos
     if(id % 5 === 0) {
       let adv = adverbsPool[id % adverbsPool.length];
       newQ.q = `Complete: 'She explains concepts ______ than her colleague.' (${adv})`;
@@ -549,7 +548,7 @@ const FULL_QUESTIONS = generateFullQuestions();
 window.QUESTIONS_POOL = FULL_QUESTIONS;
 
 // --------------------------------------------------------------
-// 120 FLASHCARDS COMPLETAS (CALIDAD)
+// 120 FLASHCARDS COMPLETAS
 // --------------------------------------------------------------
 const FLASHCARDS_CORE = [
   {term:"Comparative adverb",definition:"Compara dos acciones: 'runs faster than'."},
@@ -580,7 +579,7 @@ for(let i=FLASHCARDS_CORE.length; i<120; i++){
 window.FLASHCARDS_SET = FLASHCARDS_CORE.slice(0,120);
 
 // --------------------------------------------------------------
-// LÓGICA DEL QUIZ Y FLASHCARDS (funcionalidad completa)
+// LÓGICA DEL QUIZ Y FLASHCARDS
 // --------------------------------------------------------------
 let currentQuestions = [];
 let quizIndex = 0, score = 0, answered = false, timedMode = false, timerInterval = null;
@@ -660,9 +659,7 @@ function selectAnswer(idx){
   if(correct){
     opts[idx].classList.add('correct');
     score++;
-    // confetti básico
-    const canv = document.getElementById('confetti-canvas');
-    if(canv) triggerConfetti();
+    if(document.getElementById('confetti-canvas')) triggerConfetti();
   } else {
     opts[idx].classList.add('wrong');
     opts[q.ans].classList.add('correct');
@@ -741,7 +738,6 @@ document.getElementById('backHomeFromTips').onclick = ()=>showScreen('home');
 document.getElementById('retryQuiz').onclick = startQuiz;
 document.getElementById('homeFromResults').onclick = ()=>showScreen('home');
 document.getElementById('nextBtn').onclick = nextQuestionHandler;
-// teclado
 window.addEventListener('keydown',(e)=>{
   if(document.getElementById('quiz').classList.contains('active') && !answered && ['a','b','c','d','A','B','C','D'].includes(e.key)){
     let idx = e.key.toUpperCase().charCodeAt(0)-65;
@@ -749,7 +745,6 @@ window.addEventListener('keydown',(e)=>{
   }
   if(e.key==='Enter' && answered && document.getElementById('quiz').classList.contains('active')) nextQuestionHandler();
 });
-// canvas confetti
 const canv = document.createElement('canvas'); canv.id='confetti-canvas'; canv.style.position='fixed'; canv.style.inset=0; canv.style.pointerEvents='none'; canv.style.zIndex=9999; document.body.appendChild(canv);
 </script>
 </body>
